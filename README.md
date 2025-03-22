@@ -1,80 +1,112 @@
 # Airline Customer Satisfaction Analysis
 
-## Description
-Ce projet analyse les facteurs qui influencent la satisfaction des clients dans le secteur aérien. Il comprend un modèle de prédiction de la satisfaction client basé sur différents aspects de l'expérience de vol, ainsi qu'un dashboard interactif pour explorer les données et les tendances.
+![Dashboard Preview](https://via.placeholder.com/800x400?text=Airline+Satisfaction+Dashboard)
+
+## Aperçu
+Ce projet est une plateforme d'analyse de la satisfaction client dans le secteur aérien. Il combine un modèle de machine learning prédictif avec un dashboard interactif, permettant d'identifier les facteurs clés qui influencent la satisfaction des passagers et de prédire la satisfaction future en fonction de différents paramètres.
 
 ## Fonctionnalités
 
-- **Analyse exploratoire des données** : Visualisation des tendances et facteurs influençant la satisfaction client
-- **Modèle prédictif** : Classification binaire pour prédire si un passager sera satisfait ou non
-- **API REST** : Endpoints pour obtenir des insights et faire des prédictions
-- **Dashboard interactif** : Interface utilisateur pour explorer les données et simuler des scénarios
+- **Analyse exploratoire des données** : Visualisation des tendances et statistiques sur la satisfaction client
+- **Identification des facteurs clés d'influence** : Découverte des services ayant le plus d'impact sur la satisfaction
+- **Prédiction de satisfaction** : Modèle machine learning pour prédire si un passager sera satisfait
+- **Dashboard interactif** : Interface utilisateur intuitive pour explorer les données
+- **API REST** : Endpoints pour accéder aux prédictions et aux informations
+
+## Démonstration
+
+[Lien vers une démo en ligne - À venir]
+
+## Technologies utilisées
+
+- **Backend** : Python, Flask
+- **Frontend** : Streamlit
+- **Data Processing** : Pandas, NumPy
+- **Machine Learning** : Scikit-learn
+- **Visualisation** : Plotly
+- **Déploiement** : Docker
 
 ## Structure du projet
 
 ```
 airline-satisfaction-analysis/
-├── data/                       # Dossier contenant les données
-│   └── airline_satisfaction.csv
-├── notebooks/                  # Notebooks Jupyter pour l'exploration et la modélisation
+├── app/                         # Application frontend Streamlit
+│   └── dashboard.py             # Dashboard interactif
+├── data/                        # Données d'entraînement et de test
+│   ├── train.csv
+│   └── test.csv
+├── models/                      # Dossier pour les modèles entraînés
+├── notebooks/                   # Notebooks d'analyse
 │   ├── 01_data_exploration.ipynb
 │   └── 02_model_training.ipynb
-├── src/                        # Code source
-│   ├── api.py                  # API Flask
-│   ├── preprocessing.py        # Fonctions de prétraitement des données
-│   ├── model.py                # Fonctions pour l'entraînement et l'évaluation du modèle
-│   └── train_model.py          # Script pour entraîner le modèle
-├── app/                        # Application frontend
-│   └── dashboard.py            # Dashboard Streamlit
-├── models/                     # Modèles entraînés
-│   └── satisfaction_model.pkl
-├── Dockerfile                  # Pour containeriser l'application
-├── entrypoint.sh               # Script d'entrée pour Docker
-├── requirements.txt            # Dépendances
-└── README.md                   # Documentation
+├── src/                         # Code source du backend
+│   ├── api.py                   # API Flask
+│   ├── model.py                 # Fonctions pour l'entraînement et la prédiction
+│   ├── preprocessing.py         # Fonctions de traitement des données
+│   └── train_model.py           # Script d'entraînement du modèle
+├── Dockerfile                   # Configuration Docker
+├── entrypoint.sh                # Script de démarrage Docker
+├── requirements.txt             # Dépendances Python
+└── README.md                    # Documentation
 ```
 
-## Installation
+## Installation et utilisation
 
 ### Prérequis
-- Python 3.9+
+- Python 3.8+
 - pip
 
 ### Installation locale
 
-1. Cloner le dépôt
+1. Clonez ce dépôt
 ```bash
-git clone https://github.com/YsnHdn/airline-satisfaction-analysis.git
-cd airline-satisfaction-analysis
+git clone https://github.com/YsnHdn/airline-satisfaction.git
+cd airline-satisfaction
 ```
 
-2. Installer les dépendances
+2. Créez un environnement virtuel
+```bash
+python -m venv venv
+source venv/bin/activate  # Sur Windows: venv\Scripts\activate
+```
+
+3. Installez les dépendances
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Télécharger les données
+4. Téléchargez les données (si nécessaire)
 ```bash
 mkdir -p data
-# Utiliser Kaggle API pour télécharger les données
-kaggle datasets download -d teejmahal20/airline-passenger-satisfaction -p data/
-unzip data/airline-passenger-satisfaction.zip -d data/
+# Téléchargez manuellement depuis https://www.kaggle.com/datasets/teejmahal20/airline-passenger-satisfaction 
+# et placez les fichiers dans le dossier data/
 ```
 
-4. Entraîner le modèle
+### Important : Génération du modèle
+
+Ce dépôt ne contient pas le modèle préentraîné en raison de sa taille. Après avoir installé les dépendances et téléchargé les données, veuillez générer le modèle localement :
+
 ```bash
+# Créer le dossier models s'il n'existe pas
+mkdir -p models
+
+# Entraîner le modèle
 python src/train_model.py
 ```
 
-5. Lancer l'API
+Le modèle sera sauvegardé dans le dossier `models/` et l'application pourra l'utiliser automatiquement.
+
+5. Lancez l'API
 ```bash
 python src/api.py
 ```
 
-6. Lancer le dashboard (dans un autre terminal)
+6. Dans un autre terminal, lancez le dashboard
 ```bash
 streamlit run app/dashboard.py
 ```
+
+7. Accédez au dashboard à l'adresse http://localhost:8501
 
 ### Utilisation avec Docker
 
@@ -85,11 +117,11 @@ docker build -t airline-satisfaction .
 
 2. Lancer le conteneur
 ```bash
-docker run -p 5000:5000 -p 8080:8080 airline-satisfaction
+docker run -p 5000:5000 -p 8501:8501 airline-satisfaction
 ```
 
 3. Accéder à l'application
-   - Dashboard: http://localhost:8080
+   - Dashboard: http://localhost:8501
    - API: http://localhost:5000
 
 ## API Endpoints
@@ -99,41 +131,39 @@ docker run -p 5000:5000 -p 8080:8080 airline-satisfaction
 - `GET /api/stats` - Obtenir des statistiques descriptives sur les données
 - `POST /api/predict` - Prédire la satisfaction client basée sur les paramètres fournis
 
-## Démonstration
+## Dataset
 
-[Insérer une capture d'écran du dashboard]
+Ce projet utilise le jeu de données "Airline Passenger Satisfaction" disponible sur Kaggle. Il contient plus de 100 000 réponses de passagers avec différentes caractéristiques comme la classe de voyage, la distance, les évaluations de services, et le niveau de satisfaction global.
 
-## Déploiement
+[Télécharger sur Kaggle](https://www.kaggle.com/datasets/teejmahal20/airline-passenger-satisfaction)
 
-Ce projet peut être facilement déployé sur diverses plateformes cloud:
+## Modèle
 
-### Heroku
-```bash
-heroku container:push web -a airline-satisfaction
-heroku container:release web -a airline-satisfaction
-```
+Le modèle de prédiction utilise un algorithme Random Forest avec une précision d'environ 85% pour prédire si un client sera satisfait ou non de son expérience de vol. Les facteurs les plus importants identifiés incluent la classe de voyage, le type de client, et plusieurs services à bord.
 
-### Google Cloud Run
-```bash
-gcloud builds submit --tag gcr.io/your-project-id/airline-satisfaction
-gcloud run deploy --image gcr.io/your-project-id/airline-satisfaction --platform managed
-```
+## Contribution
 
-## Technologies utilisées
+Les contributions sont les bienvenues! Pour contribuer:
 
-- **Data Processing**: Pandas, NumPy
-- **Machine Learning**: Scikit-learn
-- **API**: Flask
-- **Visualisation**: Plotly, Streamlit
-- **Containerisation**: Docker
+1. Fork le projet
+2. Créez votre branche de fonctionnalité (`git checkout -b feature/amazing-feature`)
+3. Committez vos changements (`git commit -m 'Add some amazing feature'`)
+4. Push vers la branche (`git push origin feature/amazing-feature`)
+5. Ouvrez une Pull Request
 
-## Améliorations possibles
+## Développement futur
 
-- Implémenter des modèles plus avancés (XGBoost, Deep Learning)
-- Ajouter une fonctionnalité de mise à jour en temps réel des données
-- Intégrer une analyse de sentiment des commentaires clients
-- Développer une version mobile du dashboard
+- Ajout de visualisations plus complexes
+- Amélioration du modèle avec des algorithmes plus avancés
+- Intégration de fonctionnalités de traitement du langage naturel pour analyser les commentaires
+- Création d'une version mobile de l'application
 
-## Auteur
+## Licence
 
-HANDANE Yassine - y.handane@gmail.com
+Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
+
+## Contact
+
+Yassine HANDANE - y.handane@gmail.com
+
+Lien du projet: [https://github.com/YsnHdn/airline-satisfaction](https://github.com/YsnHdn/airline-satisfaction)
