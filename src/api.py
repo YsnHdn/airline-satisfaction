@@ -210,4 +210,5 @@ if __name__ == '__main__':
     os.makedirs(os.path.join(os.path.dirname(__file__), '../models'), exist_ok=True)
     
     # Run the app
-    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=False, host='0.0.0.0', port=port)

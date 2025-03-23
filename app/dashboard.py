@@ -14,7 +14,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.preprocessing import load_data, clean_data, get_key_factors
 
 # Constants
-API_URL = os.environ.get('API_URL', 'http://localhost:5000')
+API_URL = os.environ.get('API_URL', 'http://0.0.0.0:5000')
 DATA_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data/train.csv')
 
 # Page configuration
@@ -645,3 +645,19 @@ elif page == "Satisfaction Predictor":
             st.metric("Prediction Confidence", f"{prediction['probability'] * 100:.1f}%")
             
             st.info("Note: This is a simulation. Connect the API for real predictions.")
+
+if __name__ == '__main__':
+    # Lancement de Streamlit avec les bonnes options pour être accessible depuis l'extérieur
+    import streamlit.web.cli as stcli
+    import sys
+    
+    sys.argv = [
+        "streamlit", 
+        "run", 
+        __file__,
+        "--server.port=8501", 
+        "--server.address=0.0.0.0",
+        "--server.enableCORS=true",
+        "--server.enableXsrfProtection=false"
+    ]
+    sys.exit(stcli.main())

@@ -13,17 +13,16 @@ COPY . .
 RUN mkdir -p models
 
 # Download the dataset
-RUN mkdir -p data && \
-    python -c "import kaggle; kaggle.api.authenticate(); kaggle.api.dataset_download_files('teejmahal20/airline-passenger-satisfaction', path='./data', unzip=True)"
+RUN mkdir -p data
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
-ENV PORT=8080
-ENV API_URL=http://localhost:5000
+ENV PORT=5000
+ENV API_URL=http://0.0.0.0:5000
 
 # Expose ports for the API and Streamlit
 EXPOSE 5000
-EXPOSE 8080
+EXPOSE 8501
 
 # Train the model as part of the build process
 RUN mkdir -p notebooks/trained_model && \

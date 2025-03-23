@@ -1,7 +1,5 @@
 # Airline Customer Satisfaction Analysis
 
-![Dashboard Preview](https://via.placeholder.com/800x400?text=Airline+Satisfaction+Dashboard)
-
 ## Aperçu
 Ce projet est une plateforme d'analyse de la satisfaction client dans le secteur aérien. Il combine un modèle de machine learning prédictif avec un dashboard interactif, permettant d'identifier les facteurs clés qui influencent la satisfaction des passagers et de prédire la satisfaction future en fonction de différents paramètres.
 
