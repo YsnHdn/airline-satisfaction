@@ -13,16 +13,17 @@ Ce projet est une plateforme d'analyse de la satisfaction client dans le secteur
 
 ## Démonstration
 
-[Lien vers une démo en ligne - À venir]
+La démo est disponible sur http://airline.hopto.org:8501
 
 ## Technologies utilisées
 
 - **Backend** : Python, Flask
 - **Frontend** : Streamlit
 - **Data Processing** : Pandas, NumPy
-- **Machine Learning** : Scikit-learn
+- **Machine Learning** : Scikit-learn (Random Forest)
 - **Visualisation** : Plotly
-- **Déploiement** : Docker
+- **Déploiement** : Docker, AWS EC2, Nginx
+- **DNS** : No-IP (nom de domaine personnalisé)
 
 ## Structure du projet
 
@@ -122,6 +123,16 @@ docker run -p 5000:5000 -p 8501:8501 airline-satisfaction
    - Dashboard: http://localhost:8501
    - API: http://localhost:5000
 
+## Déploiement sur AWS EC2
+
+Le projet est déployé sur AWS EC2 et accessible via un nom de domaine personnalisé. Les étapes principales de déploiement sont :
+
+1. Lancement d'une instance EC2 avec Amazon Linux
+2. Installation de Docker sur l'instance
+3. Configuration des groupes de sécurité pour exposer les ports nécessaires
+4. Déploiement du conteneur Docker avec l'application
+5. Configuration d'un nom de domaine personnalisé avec No-IP
+
 ## API Endpoints
 
 - `GET /api/health` - Vérifier l'état de l'API
@@ -137,7 +148,7 @@ Ce projet utilise le jeu de données "Airline Passenger Satisfaction" disponible
 
 ## Modèle
 
-Le modèle de prédiction utilise un algorithme Random Forest avec une précision d'environ 85% pour prédire si un client sera satisfait ou non de son expérience de vol. Les facteurs les plus importants identifiés incluent la classe de voyage, le type de client, et plusieurs services à bord.
+Le modèle de prédiction utilise un algorithme Random Forest avec une précision d'environ 87% pour prédire si un client sera satisfait ou non de son expérience de vol. Les facteurs les plus importants identifiés incluent la classe de voyage, le type de client, et plusieurs services à bord.
 
 ## Contribution
 
@@ -154,6 +165,7 @@ Les contributions sont les bienvenues! Pour contribuer:
 - Ajout de visualisations plus complexes
 - Amélioration du modèle avec des algorithmes plus avancés
 - Intégration de fonctionnalités de traitement du langage naturel pour analyser les commentaires
+- Mise en place d'HTTPS avec Let's Encrypt
 - Création d'une version mobile de l'application
 
 ## Licence
