@@ -647,17 +647,5 @@ elif page == "Satisfaction Predictor":
             st.info("Note: This is a simulation. Connect the API for real predictions.")
 
 if __name__ == '__main__':
-    # Lancement de Streamlit avec les bonnes options pour être accessible depuis l'extérieur
-    import streamlit.web.cli as stcli
-    import sys
-    
-    sys.argv = [
-        "streamlit", 
-        "run", 
-        __file__,
-        "--server.port=8501", 
-        "--server.address=0.0.0.0",
-        "--server.enableCORS=true",
-        "--server.enableXsrfProtection=false"
-    ]
-    sys.exit(stcli.main())
+    # Ne rien faire ici, car Streamlit est déjà lancé par entrypoint.sh
+    pass
